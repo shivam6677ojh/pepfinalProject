@@ -32,7 +32,8 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="auth-card">
+    <div className="auth-page">
+      <section className="auth-card">
       <h1>Welcome Back</h1>
       <p>Sign in to continue managing projects and tasks.</p>
 
@@ -64,7 +65,8 @@ const LoginPage = () => {
       <p className="switch-link">
         No account? <Link to="/register">Create one</Link>
       </p>
-    </section>
+      </section>
+    </div>
   );
 };
 

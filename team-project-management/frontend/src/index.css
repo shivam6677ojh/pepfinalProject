@@ -97,17 +97,73 @@ p {
   box-shadow: var(--shadow);
 }
 
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
 .auth-card {
   width: min(430px, 92vw);
-  margin: 3rem auto;
+  margin: 0 auto;
   padding: 1.4rem;
   display: grid;
   gap: 0.8rem;
+  justify-items: center;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+}
+
+/* animated glowing border */
+.auth-card::before,
+.auth-card::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  width: 8px;
+  border-radius: 8px;
+  filter: blur(10px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.auth-card::before {
+  left: -6px;
+  background: linear-gradient(180deg, rgba(139,92,246,0.9), rgba(255,107,203,0.6));
+  animation: sideGlow 2.8s ease-in-out infinite alternate;
+}
+
+.auth-card::after {
+  right: -6px;
+  background: linear-gradient(180deg, rgba(106,63,224,0.9), rgba(139,92,246,0.6));
+  animation: sideGlow 3.2s ease-in-out infinite alternate-reverse;
+}
+
+.auth-card {
+  /* subtle pulsing glow behind the card */
+  animation: pulse 3.8s ease-in-out infinite;
+}
+
+@keyframes sideGlow {
+  0% { opacity: 0.25; transform: translateY(0) scaleY(1); }
+  50% { opacity: 0.85; transform: translateY(-6px) scaleY(1.06); }
+  100% { opacity: 0.25; transform: translateY(0) scaleY(1); }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 8px 24px rgba(139,92,246,0.06); }
+  50% { box-shadow: 0 18px 38px rgba(255,107,203,0.07); }
+  100% { box-shadow: 0 8px 24px rgba(139,92,246,0.06); }
 }
 
 form {
   display: grid;
   gap: 0.7rem;
+  width: 100%;
 }
 
 input,

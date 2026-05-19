@@ -32,7 +32,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <section className="auth-card">
+    <div className="auth-page">
+      <section className="auth-card">
       <h1>Create Account</h1>
       <p>Start tracking team work in one place.</p>
 
@@ -73,7 +74,8 @@ const RegisterPage = () => {
       <p className="switch-link">
         Already registered? <Link to="/login">Sign in</Link>
       </p>
-    </section>
+      </section>
+    </div>
   );
 };
 
