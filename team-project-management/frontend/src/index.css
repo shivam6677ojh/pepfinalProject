@@ -1,14 +1,15 @@
 :root {
-  --bg: #f5f1e9;
-  --card: #fffaf1;
-  --text: #2f2923;
-  --muted: #7a6d60;
-  --line: #e9dece;
-  --brand: #1f8a70;
-  --brand-dark: #176956;
-  --danger: #c84b31;
+  --bg: #070812;
+  --card: rgba(16, 23, 38, 0.55);
+  --text: #e6eef8;
+  --muted: #9aa6bf;
+  --line: rgba(255,255,255,0.06);
+  --brand: linear-gradient(90deg,#8b5cf6,#ff6bcb);
+  --brand-solid: #8b5cf6;
+  --brand-dark: #6a3fe0;
+  --danger: #ff6b6b;
   --radius: 14px;
-  --shadow: 0 14px 40px rgba(38, 30, 22, 0.09);
+  --shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
 }
 
 * {
@@ -19,9 +20,9 @@ body {
   margin: 0;
   font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at 8% 0%, #f9eedf 0, transparent 40%),
-    radial-gradient(circle at 90% 100%, #d6eee8 0, transparent 45%),
-    var(--bg);
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(139,92,246,0.12), transparent 20%),
+    radial-gradient(1000px 500px at 90% 85%, rgba(255,107,203,0.08), transparent 18%),
+    linear-gradient(180deg,#05050a 0%, #0b0f1a 100%);
   min-height: 100vh;
 }
 
@@ -48,15 +49,16 @@ p {
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 1.25rem;
-  background: rgba(255, 250, 241, 0.85);
-  border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(6px);
+  background: rgba(6,9,18,0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px);
 }
 
 .brand {
   text-decoration: none;
   font-weight: 800;
   letter-spacing: 0.03em;
+  color: var(--text);
 }
 
 .nav-links {
@@ -73,7 +75,7 @@ p {
 
 .nav-links .active {
   color: var(--text);
-  background: #ebf8f4;
+  background: rgba(255,255,255,0.03);
 }
 
 .nav-user {
@@ -89,7 +91,7 @@ p {
 
 .auth-card,
 .panel {
-  background: var(--card);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -114,9 +116,11 @@ select,
 button {
   width: 100%;
   border-radius: 10px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255,255,255,0.04);
   padding: 0.65rem 0.8rem;
   font: inherit;
+  background: transparent;
+  color: var(--text);
 }
 
 textarea {
@@ -127,17 +131,21 @@ textarea {
 button {
   cursor: pointer;
   border: none;
-  background: var(--brand);
+  background: var(--brand-solid);
   color: #fff;
-  transition: background 0.2s;
+  transition: background 0.18s, transform 0.08s;
+  box-shadow: 0 8px 24px rgba(139,92,246,0.12);
 }
 
 button:hover {
   background: var(--brand-dark);
+  transform: translateY(-2px);
 }
 
 button.secondary {
-  background: #a8b8b4;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.04);
 }
 
 button.danger {
@@ -150,6 +158,67 @@ button.danger {
   gap: 0.9rem;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
+
+/* Dashboard card grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stat-card {
+  padding: 1rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 8px 24px rgba(2,6,23,0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.stat-progress {
+  height: 8px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.stat-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg,#8b5cf6,#ff6bcb);
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+.project-cards {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  padding: 1rem;
+}
+
+.project-card {
+  padding: 0.9rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.project-card h4 { margin: 0 0 6px 0; }
+.project-card .muted { color: var(--muted); font-size: 0.9rem; margin: 0; }
 
 .panel {
   padding: 1rem;
@@ -178,8 +247,8 @@ button.danger {
 }
 
 .error {
-  color: #7a1f14;
-  background: #ffe8e3;
+  color: #ffb4b4;
+  background: rgba(255,75,75,0.08);
 }
 
 .switch-link {

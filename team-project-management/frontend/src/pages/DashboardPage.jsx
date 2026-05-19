@@ -37,30 +37,52 @@ const DashboardPage = () => {
   if (loading) return <div className="panel">Loading dashboard...</div>;
   if (error) return <div className="panel error">{error}</div>;
 
+  const statItems = [
+    { id: 'projects', label: 'Projects', value: stats.projects },
+    { id: 'tasks', label: 'Total Tasks', value: stats.tasks },
+    { id: 'todo', label: 'To Do', value: stats.todo },
+    { id: 'inProgress', label: 'In Progress', value: stats.inProgress },
+    { id: 'done', label: 'Done', value: stats.done },
+  ];
+
   return (
     <section>
       <h1>Dashboard</h1>
-      <div className="grid">
-        <article className="panel">
-          <h3>Projects</h3>
-          <p>{stats.projects}</p>
-        </article>
-        <article className="panel">
-          <h3>Total Tasks</h3>
-          <p>{stats.tasks}</p>
-        </article>
-        <article className="panel">
-          <h3>To Do</h3>
-          <p>{stats.todo}</p>
-        </article>
-        <article className="panel">
-          <h3>In Progress</h3>
-          <p>{stats.inProgress}</p>
-        </article>
-        <article className="panel">
-          <h3>Done</h3>
-          <p>{stats.done}</p>
-        </article>
+
+      <div className="card-grid">
+        {statItems.map((s) => (
+          <div key={s.id} className="stat-card">
+            <div className="stat-card-header">
+              <h3 className="stat-label">{s.label}</h3>
+            </div>
+            <div className="stat-value">{s.value}</div>
+            <div className="stat-progress">
+              <div
+                className="stat-progress-fill"
+                style={{ width: `${Math.min(100, Math.round((s.value / Math.max(1, stats.tasks || 1)) * 100))}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="content">
+        <h3 style={{ marginTop: '1.2rem' }}>Recent Projects</h3>
+        <div className="project-cards panel">
+          {/* placeholder cards; replace with API-driven project list if desired */}
+          <div className="project-card">
+            <h4>Example Project A</h4>
+            <p className="muted">3 tasks • 2 members</p>
+          </div>
+          <div className="project-card">
+            <h4>Example Project B</h4>
+            <p className="muted">5 tasks • 4 members</p>
+          </div>
+          <div className="project-card">
+            <h4>Example Project C</h4>
+            <p className="muted">1 task • 1 member</p>
+          </div>
+        </div>
       </div>
     </section>
   );
