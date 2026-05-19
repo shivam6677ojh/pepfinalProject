@@ -20,13 +20,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Backend
-        run: docker build -t zoneuser/backend:latest ./backend
+        run: docker build -t zoneuser/backend:latest ./team-project-management/backend
 
       - name: Push Backend
         run: docker push zoneuser/backend:latest
 
       - name: Build Frontend
-        run: docker build -t zoneuser/frontend:latest ./frontend
+        run: docker build -t zoneuser/frontend:latest ./team-project-management/frontend
 
       - name: Push Frontend
         run: docker push zoneuser/frontend:latest
@@ -42,4 +42,4 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
 
       - name: Deploy to Kubernetes
-        run: kubectl apply -f k8s/
+        run: kubectl apply -f team-project-management/k8s/
