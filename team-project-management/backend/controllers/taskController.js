@@ -2,6 +2,20 @@ const mongoose = require('mongoose');
 const Task = require('../models/Task');
 const Project = require('../models/Project');
 
+const normalizeStatus = (status) => {
+  if (typeof status !== 'string') {
+    return null;
+  }
+
+  const normalized = status.trim().toLowerCase();
+
+  if (normalized === 'to do') return 'todo';
+  if (normalized === 'in progress') return 'in-progress';
+  if (normalized === 'completed') return 'done';
+
+  return normalized;
+};
+
 const createTask = async (req, res) => {
   try {
     const { title, description, projectId, assignedTo } = req.body;
@@ -21,6 +35,7 @@ const createTask = async (req, res) => {
       project: projectId,
       createdBy: req.user.id,
       assignedTo: assignedTo || null,
+      status: normalizeStatus(req.body.status) || 'todo',
     });
 
     return res.status(201).json(task);
@@ -59,7 +74,7 @@ const getTasks = async (req, res) => {
 const updateTaskStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const status = normalizeStatus(req.body.status);
 
     if (!['todo', 'in-progress', 'done'].includes(status)) {
       return res.status(400).json({ message: 'Invalid status value' });

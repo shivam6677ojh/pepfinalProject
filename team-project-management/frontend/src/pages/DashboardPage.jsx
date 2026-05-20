@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
 import api from '../api/client';
 
+const normalizeStatus = (status) => {
+  if (typeof status !== 'string') return '';
+
+  const normalized = status.trim().toLowerCase();
+  if (normalized === 'to do') return 'todo';
+  if (normalized === 'in progress') return 'in-progress';
+  if (normalized === 'completed') return 'done';
+
+  return normalized;
+};
+
 const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -20,9 +31,9 @@ const DashboardPage = () => {
         setStats({
           projects: projectsRes.data.length,
           tasks: tasks.length,
-          todo: tasks.filter((t) => t.status === 'todo').length,
-          inProgress: tasks.filter((t) => t.status === 'in-progress').length,
-          done: tasks.filter((t) => t.status === 'done').length,
+          todo: tasks.filter((t) => normalizeStatus(t.status) === 'todo').length,
+          inProgress: tasks.filter((t) => normalizeStatus(t.status) === 'in-progress').length,
+          done: tasks.filter((t) => normalizeStatus(t.status) === 'done').length,
         });
       } catch (err) {
         setError(err.response?.data?.message || 'Could not load dashboard');

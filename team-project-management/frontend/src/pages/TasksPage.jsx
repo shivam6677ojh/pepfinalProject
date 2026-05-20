@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
 import api from '../api/client';
 
+const normalizeStatus = (status) => {
+  if (typeof status !== 'string') return 'todo';
+
+  const normalized = status.trim().toLowerCase();
+  if (normalized === 'to do') return 'todo';
+  if (normalized === 'in progress') return 'in-progress';
+  if (normalized === 'completed') return 'done';
+
+  return normalized;
+};
+
 const defaultTask = {
   title: '',
   description: '',
@@ -9,6 +20,11 @@ const defaultTask = {
 };
 
 const statusOptions = ['todo', 'in-progress', 'done'];
+
+const isValidUserId = (value) => {
+  const trimmed = value.trim();
+  return trimmed === '' || /^[a-f\d]{24}$/i.test(trimmed);
+};
 
 const TasksPage = () => {
   const [tasks, setTasks] = useState([]);
@@ -80,9 +96,16 @@ const TasksPage = () => {
   };
 
   const handleAssign = async (taskId, userId) => {
+    const trimmedUserId = userId.trim();
+
+    if (!isValidUserId(trimmedUserId)) {
+      setError('User ID must be a valid 24-character MongoDB ObjectId or left empty');
+      return;
+    }
+
     setError('');
     try {
-      await api.patch(`/tasks/${taskId}/assign`, { userId: userId || null });
+      await api.patch(`/tasks/${taskId}/assign`, { userId: trimmedUserId || null });
       fetchTasks(filterProjectId);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to assign task');
@@ -174,7 +197,7 @@ const TasksPage = () => {
 
               <div className="actions">
                 <select
-                  value={task.status}
+                  value={normalizeStatus(task.status)}
                   onChange={(e) => handleStatusChange(task._id, e.target.value)}
                 >
                   {statusOptions.map((status) => (
